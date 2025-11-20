@@ -1,212 +1,189 @@
-🌟 CIFAR-10 Image Classification with ResNet50
+# 🌟 CIFAR-10 Bildklassifikation mit ResNet50  
+**Deep Learning · Computer Vision · Transfer Learning · TensorFlow**
 
-Deep Learning · Computer Vision · Transfer Learning · TensorFlow
+---
 
-🧭 Über dieses Projekt
+## 🧭 Überblick
 
-Dieses Repository enthält zwei vollständige Google-Colab-Notebooks, in denen ich den CIFAR-10-Datensatz mit Hilfe von Transfer Learning und ResNet50 klassifiziere.
-Das Projekt war Teil meines Data-Analytics-Programms und hatte das Ziel, zum ersten Mal einen eigenständigen Computer-Vision-Workflow aufzubauen – ohne Schritt-für-Schritt-Anleitung.
+Dieses Repository enthält zwei vollständig ausgearbeitete Google-Colab-Notebooks, in denen ich den CIFAR-10-Datensatz mithilfe von **Transfer Learning** und **ResNet50** klassifiziere.
 
-Ich habe bewusst zwei Experimente durchgeführt:
+Das Projekt war Teil meiner Data-Analytics-Fortbildung und mein Ziel war es, einen **kompletten Computer-Vision-Workflow selbstständig** aufzubauen – ohne Schritt-für-Schritt-Anleitung.
 
-Experiment A – 10.000 Trainingsbilder
-(gemäß Aufgabenstellung, für die Live-Präsentation)
-→ zeigt Overfitting sehr klar
+Um das Verhalten des Modells besser zu verstehen, habe ich **zwei Varianten** erstellt:
 
-Experiment B – 50.000 Trainingsbilder
-(erweiterte Version zur Vertiefung)
-→ deutlich stabilere Performance, realistischere Ergebnisse
+### 🔹 Experiment A – 10.000 Trainingsbilder (Aufgabenstellung)  
+Version, die ich präsentiere.  
+Zeigt Overfitting sehr klar.
 
-Beide Notebooks sind im Repository enthalten.
+### 🔹 Experiment B – 50.000 Trainingsbilder (voller Datensatz)  
+Ein Erweiterungsexperiment, das ich danach erstellt habe.  
+Zeigt deutlich stabileres Lernen und bessere Generalisierung.
 
-📂 Repository-Inhalte
+Beide Versionen liegen diesem Repository bei.
+
+---
+
+## 📂 Repository-Struktur
+
 📁 cifar10-resnet50/
 │
-├── notebook_10k.ipynb      # Projekt gemäß Aufgabenstellung (Präsentation)
-├── notebook_50k.ipynb      # Erweiterte Version mit allen Trainingsdaten
+├── notebook_10k.ipynb # Version mit 10.000 Bildern (Präsentation)
+├── notebook_50k.ipynb # Version mit allen 50.000 Trainingsbildern
 └── README.md
 
-🎯 Zielsetzung
+---
 
-CIFAR-10 verstehen und vorbereiten
+## 🎯 Projektziele
 
-komplette Bildverarbeitungspipeline aufbauen
+- CIFAR-10-Datensatz verstehen  
+- Vollständige Bildklassifikations-Pipeline aufbauen  
+- ResNet50 als Feature-Extractor nutzen  
+- Eigenen Klassifikationskopf ergänzen  
+- Zwei Trainingsphasen durchführen:
+  - **Head-Only Training**
+  - **Fine-Tuning**
+- Generalisierung vs. Overfitting analysieren  
+- Ergebnisse durch Plots und Beispiele visualisieren  
+- Unterschiede zwischen kleinem und großem Datensatz verstehen  
 
-vortrainiertes ResNet50 nutzen (Transfer Learning)
+---
 
-eigenen Klassifikationskopf erstellen
+# 📦 Der CIFAR-10 Datensatz
 
-zweistufiges Training umsetzen
+- 60.000 RGB-Bilder  
+- 10 Klassen (z. B. airplane, dog, car, ship …)  
+- Auflösung: **32 × 32 Pixel**  
+- 50.000 Trainingsbilder  
+- 10.000 Testbilder  
 
-Phase 1: nur Kopf
+Die geringe Auflösung macht CIFAR-10 anspruchsvoll – perfekt, um zu beobachten, wie gut ein starkes, vortrainiertes Modell damit umgehen kann.
 
-Phase 2: Fine-Tuning
+---
 
-Generalisierung & Overfitting nachvollziehbar erklären
+# 🧪 Experiment A – 10.000 Bilder (Aufgabe)
 
-Ergebnisse visualisieren (Accuracy/Loss + Beispielvorhersagen)
+### **Workflow**
+- Begrenzen auf 10k Trainingsbilder  
+- Normalisierung (0–1)  
+- One-Hot-Encoding der Labels  
+- Laden von ResNet50 ohne Top-Layer  
+- Eigenen Klassifikationskopf bauen:
+  - GAP → Dense(256) → Dense(64) → Dense(10)  
+- Phase 1 → nur Kopf trainieren  
+- Phase 2 → ResNet50 auftauen und feinabstimmen  
 
-Unterschiede zwischen kleinem und großem Datensatz analysieren
+---
 
-📦 Der Datensatz: CIFAR-10
+### **Ergebnisse**
 
-60.000 RGB-Bilder
+#### **Head-Training**
+- Trainingsgenauigkeit: ~0,37  
+- Testgenauigkeit: ~0,36  
+- Stabile, parallele Kurven  
+- Modell lernt etwas, aber bleibt limitiert  
 
-10 Klassen (airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck)
+#### **Fine-Tuning**
+- Trainingsgenauigkeit: **bis 97 %**  
+- Testgenauigkeit: **nur ~26,7 %**  
+- Validation-Loss extrem hoch  
+- → **klassisches Overfitting**
 
-32×32 Pixel (sehr geringe Auflösung)
+---
 
-50k Train / 10k Test
+## 🧠 Learnings aus Experiment A
 
-Die niedrige Auflösung macht die Aufgabe überraschend anspruchsvoll und zeigt klar, wie wichtig gute Feature-Extractor sind.
+- 10k Bilder sind zu wenig für ein großes Modell wie ResNet50  
+- Fine-Tuning ist extrem empfindlich gegenüber Datenmenge  
+- Overfitting ist sowohl in Zahlen als auch in Plots sofort sichtbar  
+- Vorhersagen bestätigen das Muster: manche Treffer, viele Fehler  
 
-🧪 Experiment A – 10.000 Trainingsbilder (Aufgabenstellung)
-Vorgehen
+Diese Version eignet sich perfekt, um **Generalisation vs. Memorisation** zu demonstrieren.
 
-Trainingsdaten auf 10.000 begrenzt
+---
 
-One-Hot-Encoding der Labels
+# 🧪 Experiment B – 50.000 Bilder (voller Datensatz)
 
-Normalisierung der Bilder
+Nachdem Experiment A abgeschlossen war, habe ich das Notebook neu aufgebaut – dieses Mal mit **allen 50.000 Trainingsbildern**.
 
-ResNet50 (ImageNet-Weights) ohne Top-Layer
+### **Workflow**
+Gleiche Architektur, gleiche Hyperparameter.  
+Nur die Datenmenge wurde erhöht.
 
-eigener Kopf: GAP → Dense(256) → Dense(64) → Dense(10)
+---
 
-Phase 1: Kopf trainieren
+### **Ergebnisse**
+- **Testaccuracy: 66,30 %**  
+- deutlich stabilere Trainingskurven  
+- viel weniger Overfitting  
+- bessere, nachvollziehbarere Vorhersagen  
 
-Phase 2: ResNet auftauen + Fine-Tuning mit kleiner Lernrate
+---
 
-Ergebnisse
+## 🧠 Learnings aus Experiment B
 
-Head-Training (Phase 1)
+- Datenmenge ist einer der stärksten Einflussfaktoren im Deep Learning  
+- Fine-Tuning funktioniert deutlich besser mit mehr Daten  
+- ResNet50 wird stabiler, je mehr Beispiele es sieht  
+- Auch mit 32px-Bildern ist gute Performance möglich  
+- Der Unterschied zwischen 10k und 50k ist **dramatisch – und extrem lehrreich**  
 
-Train Accuracy: ~0.37
+---
 
-Test Accuracy: ~0.36
+# 🔍 Vergleich: 10k vs. 50k
 
-stabile, parallele Kurven
+| Faktor | 10.000 Bilder | 50.000 Bilder |
+|--------|----------------|----------------|
+| Datenmenge | reduziert | vollständig |
+| Trainingsverhalten | instabil | harmonisch |
+| Testaccuracy | ~26,7 % | ~66,3 % |
+| Overfitting | stark | deutlich geringer |
+| Vorhersagen | wechselhaft | deutlich zuverlässiger |
 
-Fine-Tuning (Phase 2)
+👉 Der Vergleich zeigt sehr klar, warum **Datenquantität** bei Deep Learning entscheidend ist.
 
-Train Accuracy: bis 97 %
+---
 
-Test Accuracy: ~26.7 %
+# 🔧 Technischer Workflow (beide Versionen)
 
-Validierungs-Loss sehr hoch
+1. CIFAR-10 laden  
+2. Normalisieren  
+3. Labels One-Hot-Encoden  
+4. ResNet50 laden (ohne Top-Layer)  
+5. Klassifikationskopf bauen  
+6. Head-Training  
+7. Fine-Tuning  
+8. Test-Evaluation  
+9. Lernkurven visualisieren  
+10. Vorhersagen anzeigen  
+11. Zweites Experiment mit 50k Bildern durchführen  
 
-→ klares Overfitting
+---
 
-Erkenntnisse aus Experiment A
+# 💡 Was ich aus dem Projekt gelernt habe
 
-10.000 Bilder sind für ein Modell wie ResNet50 sehr wenig
+- Wie Transfer Learning praktisch funktioniert  
+- Warum das Einfrieren des Basismodells wichtig ist  
+- Wie stark die Datenmenge die Generalisierung beeinflusst  
+- Wie man Overfitting erkennt und interpretiert  
+- Wie CNNs visuelle Muster verarbeiten  
+- Warum Trainingsaccuracy allein nicht aussagekräftig ist  
+- Wie Architektur, Lernrate und Datenmenge zusammen wirken  
 
-Fine-Tuning funktioniert nur, wenn genug Daten vorhanden sind
+Dieses Projekt hat mein Verständnis für Deep Learning und Computer Vision massiv vertieft.
 
-die Trainingskurven zeigen genau das typische Verhalten von Overfitting
+---
 
-Beispielvorhersagen erklären das Muster perfekt: einige richtige Treffer, doppelt so viele falsche Zuordnungen
+# 🚀 Nächste Schritte
 
-das Setup ist ideal, um das Thema Generalisation vs. Memorization zu verstehen
+- Data Augmentation  
+- L2-Regularisierung & Dropout  
+- Teilweises Auftauen einzelner ResNet-Schichten  
+- Alternatives Modell (EfficientNet, MobileNet) testen  
+- Längeres Fine-Tuning auf GPU/TPU  
+- Mixed Precision Training  
 
-🧪 Experiment B – 50.000 Trainingsbilder (Erweiterung)
+---
 
-Nach dem Pflichtprojekt habe ich dasselbe Setup erneut durchgeführt – diesmal mit allen 50.000 Trainingsbildern.
+# 📫 Kontakt
 
-Vorgehen
-
-identische Datenvorbereitung
-
-gleicher Kopf
-
-identische Hyperparameter
-
-nur mehr Trainingsdaten
-
-Ergebnisse
-
-Test Accuracy: 66.30 %
-
-Training stabil und harmonisch
-
-wesentlich bessere Generalisierung
-
-deutlich weniger Overfitting
-
-Fehlklassifikationen traten nur bei wirklich ähnlichen Klassen auf
-
-Erkenntnisse aus Experiment B
-
-Datenmenge ist ein zentraler Faktor für Deep Learning
-
-Fine-Tuning wird erst dann effektiv, wenn das Modell genug Beispiele hat
-
-ResNet50 kann auch kleine Bilder gut verarbeiten – aber es braucht Masse
-
-das Modell lernt robuste Muster, sobald genügend Varianz vorhanden ist
-
-🔍 Vergleich: 10k vs. 50k
-Faktor	10k	50k
-Trainingsdaten	begrenzt	komplett
-Verhalten	starkes Overfitting	stabil
-Test Accuracy	~26.7 %	~66.3 %
-Kurven	divergierend	harmonisch
-Vorhersagen	viele Fehler	deutlich besser
-
-👉 Der Unterschied ist ein perfektes Beispiel dafür, wie sehr Daten Qualität und Stabilität beeinflussen.
-
-🔧 Mein technisches Vorgehen
-
-CIFAR-10 laden
-
-Bilder normalisieren
-
-Labels via One-Hot-Encoding vorbereiten
-
-ResNet50 laden (ImageNet, ohne Kopf)
-
-eigenen Klassifikationskopf bauen
-
-Phase 1: Kopf trainieren
-
-Phase 2: komplettes Modell finetunen
-
-Evaluation via Accuracy, Loss, Plots
-
-Beispielvorhersagen visualisieren
-
-zweites Experiment zum Vergleich durchführen
-
-💡 Was ich gelernt habe
-
-Wie man Transfer Learning sinnvoll einsetzt
-
-Warum man Modelle zuerst einfriert
-
-Warum Fine-Tuning extrem empfindlich auf die Datenmenge reagiert
-
-wie Overfitting aussieht – nicht nur als Zahl, sondern optisch
-
-dass Generalisierung die wichtigste Metrik ist
-
-wie Architektur, Lernrate und Daten zusammenarbeiten
-
-Das Projekt hat mein Verständnis für CNNs und Deep Learning enorm vertieft.
-
-🚀 Nächste Schritte / Verbesserungsmöglichkeiten
-
-Data Augmentation (Flip, Crop, Noise, Farbe)
-
-Dropout & L2-Regularisierung
-
-längeres Training auf GPU/TPU
-
-nur obere ResNet-Schichten finetunen
-
-experimentieren mit EfficientNet oder MobileNet
-
-Mixed Precision Training
-
-📫 Kontakt
-
-Bei Fragen, Feedback oder Interesse am Projekt – ich freue mich über Austausch!
+Wenn du Feedback hast oder über Deep Learning sprechen möchtest – jederzeit gerne!
