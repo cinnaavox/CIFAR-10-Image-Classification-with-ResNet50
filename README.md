@@ -27,8 +27,8 @@ Beide Versionen liegen diesem Repository bei.
 
 cifar10-resnet50/
 
-- CV_Project_Final_Version.ipynb        # Version mit 10.000 Bildern (Präsentation)
-- CV_Project_Version_2_all_data.ipynb   # Version mit allen 50.000 Trainingsbildern
+- CV_Project_Final_Version.ipynb        -> Version mit 10.000 Bildern (Präsentation)
+- CV_Project_Version_2_all_data.ipynb   -> Version mit allen 50.000 Trainingsbildern
 - README.md
 
 ---
