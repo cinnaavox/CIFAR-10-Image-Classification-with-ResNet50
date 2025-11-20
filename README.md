@@ -25,11 +25,11 @@ Beide Versionen liegen diesem Repository bei.
 
 ### 📂 Repository-Struktur
 
-📁 cifar10-resnet50/
-├── CV_Project_Final_Version.ipynb — Version mit 10.000 Bildern (Präsentation)
-├── CV_Project_Version_2(all_data).ipynb — Version mit allen 50.000 Trainingsbildern
-└── README.md
-
+cifar10-resnet50/
+|
+|-- CV_Project_Final_Version.ipynb        # Version mit 10.000 Bildern (Präsentation)
+|-- CV_Project_Version_2_all_data.ipynb   # Version mit allen 50.000 Trainingsbildern
+|-- README.md
 
 ---
 
@@ -181,6 +181,14 @@ Dieses Projekt hat mein Verständnis für Deep Learning und Computer Vision mass
 - Alternatives Modell (EfficientNet, MobileNet) testen  
 - Längeres Fine-Tuning auf GPU/TPU  
 - Mixed Precision Training  
+
+---
+
+📄 Notebook (10.000 Bilder – Präsentationsversion):
+👉 [Hier klicken](https://colab.research.google.com/drive/1LtZH3GiPX27fzAkld4mNZo2LKuOTeZGW?usp=sharing)
+
+📄 Notebook (50.000 Bilder – vollständiger Datensatz):
+👉 [Hier klicken](https://colab.research.google.com/drive/1FQVA2m7Zo43ApRV2ry36I7CTq9AWDsnS?usp=sharing)
 
 ---
 
