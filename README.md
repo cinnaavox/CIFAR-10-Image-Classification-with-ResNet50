@@ -27,8 +27,8 @@ Beide Versionen liegen diesem Repository bei.
 
 📁 cifar10-resnet50/
 │
-├── notebook_10k.ipynb # Version mit 10.000 Bildern (Präsentation)
-├── notebook_50k.ipynb # Version mit allen 50.000 Trainingsbildern
+├── CV_Project_Final_Version.ipynb # Version mit 10.000 Bildern (Präsentation)
+├── CV_Project_Version_2(all_data).ipynb # Version mit allen 50.000 Trainingsbildern
 └── README.md
 
 ---
